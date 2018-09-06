@@ -26,7 +26,7 @@
         var userID = getParameterByName('userid');
         var name = getParameterByName('name');
         /** CONFIG **/
-        var SIGNALING_SERVER = "https://xxx.xx.xx.xxx:8443"; //your  node server addres  or  IP adress
+        var SIGNALING_SERVER = "https://0.0.0.0:8443"; //your  node server addres  or  IP adress
         var USE_AUDIO = true;
         var USE_VIDEO = true;
         var MUTE_AUDIO_BY_DEFAULT = false;
@@ -48,7 +48,7 @@
         var peer_media_elements = {};
         /* keep track of our <video>/<audio> tags, indexed by peer_id */
         $(document).ready(function (a) {
-            socket = io(SIGNALING_SERVER);
+            // socket = io(SIGNALING_SERVER);
             socket = io();
             //----------------------------------------------------------------------->>>>> Files Send Start
             const BYTES_PER_CHUNK = 1200;
