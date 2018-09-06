@@ -27,6 +27,7 @@ var io = socket(server);
 
 io.on('connection', function (socket) {
     var channel;
+    var sockets = {};
     socket.channels = {};
     sockets[socket.id] = socket;
     console.log("[" + socket.id + "] connection accepted");

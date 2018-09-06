@@ -305,7 +305,8 @@
             /* Ask user for permission to use the computers microphone and/or camera,
              * attach it to an <audio> or <video> tag if they give us access. */
             console.log("Requesting access to local audio / video inputs");
-            navigator.getUserMedia = ( navigator.getUserMedia ||
+            navigator.getUserMedia = ( navigator.mediaDevices.getUserMedia || 
+            navigator.getUserMedia ||
             navigator.webkitGetUserMedia ||
             navigator.mozGetUserMedia ||
             navigator.msGetUserMedia);
