@@ -25,6 +25,8 @@ var server = main.listen(PORT, function() {
 app.use(express.static('public'));
 var io = socket(server);
 
+var channels = {};
+
 io.on('connection', function (socket) {
     var channel;
     var sockets = {};
