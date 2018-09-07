@@ -203,7 +203,7 @@
                  */
                 if (config.should_create_offer) {
                     console.log("Creating RTC offer to ", peer_id);
-                    peer_connection.createOffer(
+                    peer_connection.createOffer().then(
                         function (local_description) {
                             console.log("Local offer description is: ", local_description);
                             peer_connection.setLocalDescription(local_description,
@@ -216,8 +216,7 @@
                                     Alert("Offer setLocalDescription failed!");
                                 }
                             );
-                        },
-                        function (error) {
+                        }).catch(function (error) {
                             console.log("Error sending offer: ", error);
                         });
                 }
@@ -259,8 +258,6 @@
                                     console.log("Error creating answer: ", error);
                                     console.log(peer);
                                 });
-                        } else {
-                            peer_connection.addStream(local_media_stream);
                         }
                     },
                     function (error) {
