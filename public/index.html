@@ -241,7 +241,7 @@
                         console.log("setRemoteDescription succeeded");
                         if (remote_description.type == "offer") {
                             console.log("Creating answer");
-                            peer.createAnswer(
+                            peer.createAnswer().then(
                                 function (local_description) {
                                     console.log("Answer description is: ", local_description);
                                     peer.setLocalDescription(local_description,
@@ -254,7 +254,7 @@
                                             Alert("Answer setLocalDescription failed!");
                                         }
                                     );
-                                },
+                                }).catch(
                                 function (error) {
                                     console.log("Error creating answer: ", error);
                                     console.log(peer);
