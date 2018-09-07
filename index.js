@@ -26,11 +26,11 @@ app.use(express.static('public'));
 var io = socket(server);
 
 
+var sockets = {};
+var channels = {};
 
 io.on('connection', function (socket) {
     var channel;
-    var sockets = {};
-    var channels = {};
     socket.channels = {};
     sockets[socket.id] = socket;
     console.log("[" + socket.id + "] connection accepted");
