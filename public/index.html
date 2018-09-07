@@ -236,38 +236,36 @@
                 console.log(config.session_description);
                 var desc = new RTCSessionDescription(remote_description);
                 console.log(desc)
-                if (desc.sdp) {
-                    var stuff = peer.setRemoteDescription(desc,
-                        function () {
-                            console.log("setRemoteDescription succeeded");
-                            if (remote_description.type == "offer") {
-                                console.log("Creating answer");
-                                peer.createAnswer().then(
-                                    function (local_description) {
-                                        console.log("Answer description is: ", local_description);
-                                        peer.setLocalDescription(local_description,
-                                            function () {
-                                                socket.emit('relaySessionDescription-room',
-                                                    {'peer_id': peer_id, 'session_description': local_description});
-                                                console.log("Answer setLocalDescription succeeded");
-                                            },
-                                            function () {
-                                                Alert("Answer setLocalDescription failed!");
-                                            }
-                                        );
-                                    }).catch(
-                                    function (error) {
-                                        console.log("Error creating answer: ", error);
-                                        console.log(peer);
-                                    });
-                            }
-                        },
-                        function (error) {
-                            console.log("setRemoteDescription error: ", error);
+                var stuff = peer.setRemoteDescription(desc,
+                    function () {
+                        console.log("setRemoteDescription succeeded");
+                        if (remote_description.type == "offer") {
+                            console.log("Creating answer");
+                            peer.createAnswer().then(
+                                function (local_description) {
+                                    console.log("Answer description is: ", local_description);
+                                    peer.setLocalDescription(local_description,
+                                        function () {
+                                            socket.emit('relaySessionDescription-room',
+                                                {'peer_id': peer_id, 'session_description': local_description});
+                                            console.log("Answer setLocalDescription succeeded");
+                                        },
+                                        function () {
+                                            Alert("Answer setLocalDescription failed!");
+                                        }
+                                    );
+                                }).catch(
+                                function (error) {
+                                    console.log("Error creating answer: ", error);
+                                    console.log(peer);
+                                });
                         }
-                    );
-                    console.log("Description Object: ", desc);
-                }
+                    },
+                    function (error) {
+                        console.log("setRemoteDescription error: ", error);
+                    }
+                );
+                console.log("Description Object: ", desc);
             });
             /**
              * The offerer will send a number of ICE Candidate blobs to the answerer so they
