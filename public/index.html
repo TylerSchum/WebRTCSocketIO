@@ -203,22 +203,21 @@
                  */
                 if (config.should_create_offer) {
                     console.log("Creating RTC offer to ", peer_id);
-                    peer_connection.createOffer().then(
-                        function (local_description) {
-                            console.log("Local offer description is: ", local_description);
-                            peer_connection.setLocalDescription(local_description,
-                                function () {
-                                    socket.emit('relaySessionDescription-room',
-                                        {'peer_id': peer_id, 'session_description': local_description});
-                                    console.log("Offer setLocalDescription succeeded");
-                                },
-                                function () {
-                                    Alert("Offer setLocalDescription failed!");
-                                }
-                            );
-                        }).catch(function (error) {
-                            console.log("Error sending offer: ", error);
-                        });
+                    peer_connection.createOffer().then(function (local_description) {
+                        console.log("Local offer description is: ", local_description);
+                        peer_connection.setLocalDescription(local_description,
+                            function () {
+                                socket.emit('relaySessionDescription-room',
+                                    {'peer_id': peer_id, 'session_description': local_description});
+                                console.log("Offer setLocalDescription succeeded");
+                            },
+                            function () {
+                                Alert("Offer setLocalDescription failed!");
+                            }
+                        );
+                    }).catch(function (error) {
+                        console.log("Error sending offer: ", error);
+                    });
                 }
             });
             /**

@@ -54,7 +54,8 @@ io.on('connection', function (socket) {
             }
             for (id in channels[channel]) {
                 channels[channel][id].emit('addPeer-room', {'peer_id': socket.id, 'should_create_offer': false});
-                socket.emit('addPeer-room', {'peer_id': id, 'should_create_offer': true});
+                // socket.emit('addPeer-room', {'peer_id': id, 'should_create_offer': true});
+                channels[channel][id].emit('addPeer-room', {'peer_id': id, 'should_create_offer': true});
                 console.log("what  is this  id -> ", id);
             }
             config.peer_id = socket.id;
@@ -80,7 +81,9 @@ io.on('connection', function (socket) {
     }
 
     socket.on('call', function(config) {
-
+        var callerID = config.callToId,
+        userID = config.callFromId;
+        // socket.emit('iceCandidate-room', {})
     });
 
     socket.on('part', part);
