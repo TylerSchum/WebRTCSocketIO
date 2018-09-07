@@ -182,7 +182,7 @@
                         });
                     }
                 }
-                peer_connection.onaddstream = function (event) {
+                peer_connection.ontrack = function (event) {
                     console.log("onAddStream", event);
                     var remote_media = USE_VIDEO ? $("<video>") : $("<audio>");
                     remote_media.attr("autoplay", "autoplay");
