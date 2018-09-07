@@ -259,13 +259,13 @@
                                         console.log(peer);
                                     });
                             }
+                        },
+                        function (error) {
+                            console.log("setRemoteDescription error: ", error);
                         }
-                    },
-                    function (error) {
-                        console.log("setRemoteDescription error: ", error);
-                    }
-                );
-                console.log("Description Object: ", desc);
+                    );
+                    console.log("Description Object: ", desc);
+                }
             });
             /**
              * The offerer will send a number of ICE Candidate blobs to the answerer so they
