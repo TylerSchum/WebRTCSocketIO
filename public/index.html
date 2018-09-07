@@ -23,7 +23,7 @@
         
         
         var room = getParameterByName('room');
-        var userID = getParameterByName('userid');
+        var IDUser = getParameterByName('userid');
         var name = getParameterByName('name');
         /** CONFIG **/
         var SIGNALING_SERVER = "https://0.0.0.0:8443"; //your  node server addres  or  IP adress
@@ -138,7 +138,7 @@
                 setup_local_media(function () {
                     /* once the user has given us access to their
                      * microphone/camcorder, join the channel and start peering up */
-                    join_chat_channel(room, {'name': name, 'userID': userID});
+                    join_chat_channel(room, {'name': name, 'userID': IDUser});
                 });
             });
             socket.on('room-users', function (data) {
