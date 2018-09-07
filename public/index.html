@@ -143,7 +143,7 @@
             });
             socket.on('room-users', function (data) {
                 console.log(data);
-                $("#online-user").append('<tr id="' + data.id + '" ><td>Name = ' + data.userdata.name + ' <br> User ID= ' + data.userdata.userID + '</td><td><button class="call" id="' + data.userdata.userID + '">Call</button></td></tr>');
+                $("#online-user").append('<tr id="' + data.peer_id + '" ><td>Name = ' + data.userdata.name + ' <br> User ID= ' + data.userdata.userID + '</td><td><button class="call" id="' + data.userdata.userID + '">Call</button></td></tr>');
             });
             $('body').on('click', '.call', function () {
                 var callerID = $(this).attr('id');
