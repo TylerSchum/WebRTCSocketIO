@@ -148,7 +148,7 @@
             $('body').on('click', '.call', function () {
                 var callerID = $(this).attr('id');
             
-                socket.emit('call', {"callToId": callerID, "callFromId": userID});
+                socket.emit('call', {"callToId": callerID, "callFromId": IDUser});
             });
             /**
              * When we join a group, our signaling server will send out 'addPeer' events to each pair
