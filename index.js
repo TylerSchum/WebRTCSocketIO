@@ -73,8 +73,8 @@ io.on('connection', function (socket) {
         delete socket.channels[channel];
         delete channels[channel][socket.id];
         for (id in channels[channel]) {
-            channels[channel][id].emit('removePeer', {'peer_id': socket.id});
-            socket.emit('removePeer', {'peer_id': id});
+            channels[channel][id].emit('removePeer-room', {'peer_id': socket.id});
+            socket.emit('removePeer-room', {'peer_id': id});
         }
     }
 
