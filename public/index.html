@@ -271,6 +271,7 @@
              * can begin trying to find the best path to one another on the net.
              */
             socket.on('iceCandidate-room', function (config) {
+                console.log('ice-candidate received')
                 var peer = peers[config.peer_id];
                 var ice_candidate = config.ice_candidate;
                 peer.addIceCandidate(new RTCIceCandidate(ice_candidate));
