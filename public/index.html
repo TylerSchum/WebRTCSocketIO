@@ -259,6 +259,8 @@
                                     console.log("Error creating answer: ", error);
                                     console.log(peer);
                                 });
+                        } else {
+                            peer_connection.addStream(local_media_stream);
                         }
                     },
                     function (error) {
