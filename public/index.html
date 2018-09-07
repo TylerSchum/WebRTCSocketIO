@@ -182,7 +182,7 @@
                         });
                     }
                 }
-                peer_connection.ontrack = function (event) {
+                peer_connection.onaddstream = function (event) {
                     console.log("onAddStream", event);
                     var remote_media = USE_VIDEO ? $("<video>") : $("<audio>");
                     remote_media.attr("autoplay", "autoplay");
@@ -235,6 +235,7 @@
                 var remote_description = config.session_description;
                 console.log(config.session_description);
                 var desc = new RTCSessionDescription(remote_description);
+                console.log(desc)
                 var stuff = peer.setRemoteDescription(desc,
                     function () {
                         console.log("setRemoteDescription succeeded");
