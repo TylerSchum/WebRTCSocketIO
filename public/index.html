@@ -141,7 +141,7 @@
                     join_chat_channel(room, {'name': name, 'userID': userID});
                 });
             });
-            socket.on('room-user', function (data) {
+            socket.on('room-users', function (data) {
                 console.log(data);
                 $("#online-user").append('<tr><td>Name = ' + data.userdata.name + ' <br> User ID= ' + data.userdata.userID + '</td><td><button class="call" id="' + data.userdata.userID + '">Call</button></td></tr>');
             });
