@@ -61,7 +61,8 @@ io.on('connection', function (socket) {
             config.peer_id = socket.id;
             console.log(config.userdata.name, ' joining room', config.channel);
             socket.join(config.channel);
-            socket.broadcast.in(config.channel).emit('room-users', config);
+            // socket.broadcast.in(config.channel).emit('room-users', config);
+            channels[channel][socket.id].emit('room-users', config);
             channels[channel][socket.id] = socket;
             socket.channels[channel] = channel;
         }
