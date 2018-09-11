@@ -84,7 +84,7 @@ io.on('connection', function (socket) {
     socket.on('call', function(config) {
         var callerID = config.callToId,
         userID = config.callFromId;
-        // socket.emit('iceCandidate-room', {})
+        socket.emit('call-user', config)
     });
 
     socket.on('part', part);

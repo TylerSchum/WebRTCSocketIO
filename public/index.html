@@ -195,9 +195,7 @@
                     attachMediaStream(remote_media[0], event.stream);
                 }
                 /* Add our local stream */
-                socket.on('call-user', function() {
-                    peer_connection.addStream(local_media_stream);
-                });
+                peer_connection.addStream(local_media_stream);
                 /* Only one side of the peer connection should create the
                  * offer, the signaling server picks one to be the offerer.
                  * The other user will get a 'sessionDescription' event and will
