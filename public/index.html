@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
     <script>
@@ -48,14 +47,14 @@
         /* keep track of our peer connections, indexed by peer_id (aka socket.io id) */
         var peer_media_elements = {};
         /* keep track of our <video>/<audio> tags, indexed by peer_id */
-        $(document).ready(function (a) {
+        function Main(a) {
             // socket = io(SIGNALING_SERVER);
             socket = io();
             //----------------------------------------------------------------------->>>>> Files Send Start
             const BYTES_PER_CHUNK = 1200;
             var file;
             var currentChunk;
-            var fileInput = $('input[type=file]');
+            var fileInput = document.querySelector('input[type=file]');
             var fileReader = new FileReader();
 
             function readNextChunk() {
@@ -72,7 +71,7 @@
                     readNextChunk();
                 }
             };
-            fileInput.on('change', function () {
+            fileInput.addEventListener('change', function () {
                 file = fileInput[0].files[0];
                 currentChunk = 0;
                 // send some metadata about our file
@@ -145,10 +144,11 @@
                 console.log(data);
                 document.getElementById("online-user").innerHTML = "<table>" + data.map(user => `<tr id="${user.peer_id}" ><td>Name = ${user.name} User ID=${user.userID}</td><td><button class="call" id="${user.userID}">Call</button></td></tr>`).join("") + "</table>";
             });
-            $('body').on('click', '.call', function () {
-                var callerID = $(this).attr('id');
-            
-                socket.emit('call', {"callToId": callerID, "callFromId": IDUser});
+            document.querySelector('body').addEventListener('click', function (e) {
+                if (e.target.classList.contains('call')) {
+                    var callerID = e.target.id;
+                    socket.emit('call', {"callToId": callerID, "callFromId": IDUser});
+                }
             });
             /**
              * When we join a group, our signaling server will send out 'addPeer' events to each pair
@@ -184,14 +184,14 @@
                 }
                 peer_connection.onaddstream = function (event) {
                     console.log("onAddStream", event);
-                    var remote_media = USE_VIDEO ? $("<video>") : $("<audio>");
-                    remote_media.attr("autoplay", "autoplay");
+                    var remote_media = USE_VIDEO ? document.createElement("video") : document.createElement("audio");
+                    remote_media.setAttribute("autoplay", "autoplay");
                     if (MUTE_AUDIO_BY_DEFAULT) {
-                        remote_media.prop("muted", "true");
+                        remote_media.setAttribute("muted", "true");
                     }
-                    remote_media.attr("controls", "");
+                    remote_media.setAttribute("controls", "");
                     peer_media_elements[peer_id] = remote_media;
-                    $('body').append(remote_media);
+                    document.body.innerHTML += remote_media;
                     attachMediaStream(remote_media[0], event.stream);
                 }
                 /* Add our local stream */
@@ -296,9 +296,10 @@
                 }
                 delete peers[peer_id];
                 delete peer_media_elements[config.peer_id];
-                $('#' + peer_id).remove();
+                let elem = document.getElementById(peer_id);
+                elem.parentNode.removeChild(elem);
             });
-        });
+        }
         function setup_local_media(callback, errorback) {
             if (local_media_stream != null) {  /* ie, if we've already been initialized */
                 if (callback) callback();
@@ -307,25 +308,19 @@
             /* Ask user for permission to use the computers microphone and/or camera,
              * attach it to an <audio> or <video> tag if they give us access. */
             console.log("Requesting access to local audio / video inputs");
-            // navigator.getUserMedia = ( navigator.mediaDevices.getUserMedia || 
-            // navigator.getUserMedia ||
-            // navigator.webkitGetUserMedia ||
-            // navigator.mozGetUserMedia ||
-            // navigator.msGetUserMedia);
             attachMediaStream = function (element, stream) {
-                console.log('DEPRECATED, attachMediaStream will soon be removed.');
                 element.srcObject = stream;
             };
             navigator.mediaDevices.getUserMedia({"audio": USE_AUDIO, "video": USE_VIDEO}).then(
                 function (stream) { /* user accepted access to a/v */
                     console.log("Access granted to audio/video");
                     local_media_stream = stream;
-                    var local_media = USE_VIDEO ? $("<video>") : $("<audio>");
-                    local_media.attr("autoplay", "autoplay");
-                    local_media.prop("muted", "true");
+                    var local_media = USE_VIDEO ? document.createElement("video") : document.createElement("audio");
+                    local_media.setAttribute("autoplay", "autoplay");
+                    local_media.setAttribute("muted", "true");
                     /* always mute ourselves by default */
-                    local_media.attr("controls", "");
-                    $('body').append(local_media);
+                    local_media.setAttribute("controls", "");
+                    document.body.innerHTML += local_media;
                     attachMediaStream(local_media[0], stream);
                     if (callback) callback();
                 },
@@ -335,6 +330,7 @@
                     if (errorback) errorback();
                 });
         }
+        document.addEventListener("DOMContentLoaded", main)
     </script>
 </head>
 <body>
