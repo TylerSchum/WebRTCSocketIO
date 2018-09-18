@@ -59,6 +59,7 @@ io.on('connection', function (socket) {
                 socket.emit('addPeer-room', {'peer_id': id, 'should_create_offer': true});
                 console.log("what  is this  id -> ", id);
                 channels[channel][id].emit('room-users', config);
+                socket.emit('room-users', config);
             }
             console.log(config.userdata.name, ' joining room', config.channel);
             socket.join(config.channel);
