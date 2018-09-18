@@ -143,7 +143,7 @@
             });
             socket.on('room-users', function (data) {
                 console.log(data);
-                $("#online-user").append('<tr id="' + data.peer_id + '" ><td>Name = ' + data.userdata.name + ' <br> User ID= ' + data.userdata.userID + '</td><td><button class="call" id="' + data.userdata.userID + '">Call</button></td></tr>');
+                document.getElementById("online-user").innerHTML = data.map(user => `<tr id="${user.peer_id}" ><td>Name = ${user.name} <br> User ID=${user.userID}</td><td><button class="call" id="${user.userID}">Call</button></td></tr>`).join("");
             });
             $('body').on('click', '.call', function () {
                 var callerID = $(this).attr('id');

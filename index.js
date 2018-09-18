@@ -58,13 +58,18 @@ io.on('connection', function (socket) {
                 channels[channel][id].emit('addPeer-room', {'peer_id': socket.id, 'should_create_offer': false});
                 socket.emit('addPeer-room', {'peer_id': id, 'should_create_offer': true});
                 console.log("what  is this  id -> ", id);
-                channels[channel][id].emit('room-users', config);
-                socket.emit('room-users', config);
+                // channels[channel][id].emit('room-users', config);
             }
             console.log(config.userdata.name, ' joining room', config.channel);
             socket.join(config.channel);
-            // socket.broadcast.in(config.channel).emit('room-users', config);
             channels[channel][socket.id] = socket;
+            if (!channels[channel].users) {
+                channels[channel].users = [];
+            }
+            userdata.peer_id = socket.id
+            channels[channel][socket.id].users.push(userdata);
+            socket.broadcast.in(config.channel).emit('room-users', channels[channel].users);
+            socket.emit('room-users', channels[channel].users);
             socket.channels[channel] = channel;
         }
     });
