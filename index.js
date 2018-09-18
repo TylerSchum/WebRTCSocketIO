@@ -84,10 +84,21 @@ io.on('connection', function (socket) {
         delete socket.channels[channel];
         delete channels[channel][socket.id];
         channels[channel].users = channels[channel].users.filter(obj => obj.peer_id !== socket.id)
-        for (id in channels[channel]) {
-            channels[channel][id].emit('removePeer-room', {'peer_id': socket.id});
-            socket.emit('removePeer-room', {'peer_id': id});
+        if (emptyObj(channels[channel])) {
+            delete channels[channel];
+        } else {
+            for (id in channels[channel]) {
+                channels[channel][id].emit('removePeer-room', {'peer_id': socket.id});
+                socket.emit('removePeer-room', {'peer_id': id});
+            }
         }
+    }
+
+    function emptyObj(obj) {
+        for (let key in obj) {
+            if (obj.hasOwnProperty(key)) return false;
+        }
+        return true;
     }
 
     socket.on('call', function(config) {
