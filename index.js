@@ -67,7 +67,7 @@ io.on('connection', function (socket) {
                 channels[channel].users = [];
             }
             userdata.peer_id = socket.id
-            channels[channel][socket.id].users.push(userdata);
+            channels[channel].users.push(userdata);
             socket.broadcast.in(config.channel).emit('room-users', channels[channel].users);
             socket.emit('room-users', channels[channel].users);
             socket.channels[channel] = channel;
