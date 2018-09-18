@@ -55,9 +55,11 @@ io.on('connection', function (socket) {
             }
             config.peer_id = socket.id;
             for (id in channels[channel]) {
-                channels[channel][id].emit('addPeer-room', {'peer_id': socket.id, 'should_create_offer': false});
-                socket.emit('addPeer-room', {'peer_id': id, 'should_create_offer': true});
-                console.log("what  is this  id -> ", id);
+                if (id == 'users') {
+                    channels[channel][id].emit('addPeer-room', {'peer_id': socket.id, 'should_create_offer': false});
+                    socket.emit('addPeer-room', {'peer_id': id, 'should_create_offer': true});
+                    console.log("what  is this  id -> ", id);
+                }
                 // channels[channel][id].emit('room-users', config);
             }
             console.log(config.userdata.name, ' joining room', config.channel);
