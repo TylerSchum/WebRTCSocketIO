@@ -47,7 +47,7 @@
         /* keep track of our peer connections, indexed by peer_id (aka socket.io id) */
         var peer_media_elements = {};
         /* keep track of our <video>/<audio> tags, indexed by peer_id */
-        function Main(a) {
+        function init(a) {
             // socket = io(SIGNALING_SERVER);
             socket = io();
             //----------------------------------------------------------------------->>>>> Files Send Start
@@ -330,7 +330,7 @@
                     if (errorback) errorback();
                 });
         }
-        document.addEventListener("DOMContentLoaded", main)
+        document.addEventListener("DOMContentLoaded", init)
     </script>
 </head>
 <body>
