@@ -191,7 +191,7 @@
                     }
                     remote_media.setAttribute("controls", "");
                     peer_media_elements[peer_id] = remote_media;
-                    document.body.innerHTML += remote_media;
+                    document.body.appendChild(remote_media);
                     attachMediaStream(remote_media[0], event.stream);
                 }
                 /* Add our local stream */
@@ -234,8 +234,8 @@
                 console.log(config.session_description);
                 var desc = new RTCSessionDescription(remote_description);
                 console.log(desc)
-                var stuff = peer.setRemoteDescription(desc,
-                    function () {
+                var stuff = peer.setRemoteDescription(desc)
+                .then(function () {
                         console.log("setRemoteDescription succeeded");
                         if (remote_description.type == "offer") {
                             console.log("Creating answer");
@@ -258,8 +258,8 @@
                                     console.log(peer);
                                 });
                         }
-                    },
-                    function (error) {
+                    }
+                ).catch(function (error) {
                         console.log("setRemoteDescription error: ", error);
                     }
                 );
@@ -320,7 +320,7 @@
                     local_media.setAttribute("muted", "true");
                     /* always mute ourselves by default */
                     local_media.setAttribute("controls", "");
-                    document.body.innerHTML += local_media;
+                    document.body.appendChild(local_media);
                     attachMediaStream(local_media[0], stream);
                     if (callback) callback();
                 },
